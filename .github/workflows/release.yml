@@ -1,0 +1,37 @@
+name: Release
+
+# Tag `vX.Y.Z` publishes facebook-scraper-api to npm with trusted publishing (OIDC).
+# The first version is published by hand (`npm publish --access public`); then
+# npmjs.com → facebook-scraper-api → Settings → Trusted publishing → GitHub Actions,
+# SocialAPIsHub/facebook-scraper-js, workflow release.yml.
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm install -g npm@latest
+      - run: npm install --no-audit --no-fund
+      - run: npm test
+      - name: Version matches tag
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          version=$(node -p "require('./package.json').version")
+          test "$tag" = "$version" || { echo "::error::tag $tag != version $version"; exit 1; }
+      - run: npm publish --provenance --access public
