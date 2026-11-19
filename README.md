@@ -1,29 +1,47 @@
 # facebook-scraper-js
 
+[![facebook-scraper-api on npm](https://img.shields.io/npm/v/facebook-scraper-api?label=facebook-scraper-api&logo=npm)](https://www.npmjs.com/package/facebook-scraper-api)
 [![npm](https://img.shields.io/npm/v/socialapis-sdk?cacheSeconds=300&label=npm&logo=npm)](https://www.npmjs.com/package/socialapis-sdk)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D18-blue.svg)](https://nodejs.org)
 
 > Modern TypeScript/JavaScript alternative to abandoned Node.js Facebook scrapers — `facebook-scraper-with-puppeteer`, `node-facebook-scraper`, and the long tail of dead packages that broke when Meta last changed their interface. Hosted backend means it doesn't break next time either, **and you don't need Instagram credentials, OAuth tokens, or Puppeteer at all**.
 
-This repo is a **migration landing page** + working examples. The actual SDK lives at [`SocialAPIsHub/socialapis-js`](https://github.com/SocialAPIsHub/socialapis-js) and ships as the [`socialapis-sdk`](https://www.npmjs.com/package/socialapis-sdk) package on npm.
+This repo ships the **`facebook-scraper-api`** package: Page details, Page and group posts, reels, videos, comments and search, with pagination handled for you and a command-line tool. TypeScript types included.
 
 ```bash
-npm install socialapis-sdk
+npm install facebook-scraper-api
+export SOCIALAPIS_TOKEN=your_key
 ```
 
-```ts
-import { FacebookScraper } from "socialapis-sdk"; // alias of Facebook
+```js
+import { FacebookScraperAPI } from "facebook-scraper-api";
 
-const fb = new FacebookScraper({ apiToken: "..." });
+const fb = new FacebookScraperAPI(); // or new FacebookScraperAPI({ apiToken: "..." })
 const page = await fb.getPageInfo("EngenSA");
-console.log(page.title, page.followers_count, page.category);
+console.log(page.title, page.followers_count);
 
-const posts = await fb.getPagePosts("EngenSA");
-for (const post of posts.data ?? []) {
-  console.log(post.text?.slice(0, 80));
+// Follows the cursor: 1 API call per page, stops when there are no more posts
+for await (const post of fb.getPosts("EngenSA", { pages: 2, limit: 9 })) {
+  console.log(post);
 }
 ```
+
+```bash
+npx facebook-scraper-api posts EngenSA --pages 3 --limit 9 --out posts.csv
+npx facebook-scraper-api comments https://www.facebook.com/EngenSA/posts/123 --format jsonl
+```
+
+| Method | Returns |
+|---|---|
+| `getPageInfo(account)` / `getGroupInfo(group)` | Page / public group details |
+| `getPosts(account, { pages, limit, after, before })` | A Page's posts, newest first (limit 3-9 per call, cost round(limit ÷ 3) credits) |
+| `getGroupPosts(group, { … })` | A public group's posts |
+| `getReels(account)` / `getVideos(account)` | A Page's reels / videos |
+| `getPost(postUrl, { extended })` / `getComments(postUrl)` | One post / its comments |
+| `searchPosts(query)` / `searchPages(query)` | Keyword search |
+
+Listings are async generators; `pages` (default 1) caps the API calls. Failed calls (4xx / 5xx) are not charged. Need Instagram, Marketplace or the Ads Library too? Use the full SDK, [`socialapis-sdk`](https://www.npmjs.com/package/socialapis-sdk) ([source](https://github.com/SocialAPIsHub/socialapis-js)); the rest of this page shows the migration with it. Ads only: [`facebook-ads-library-api`](https://www.npmjs.com/package/facebook-ads-library-api).
 
 **[Get a free API token →](https://socialapis.io/auth/signup)** — 200 calls/month, no credit card
 

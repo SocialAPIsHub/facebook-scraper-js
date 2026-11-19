@@ -1,0 +1,52 @@
+{
+  "name": "facebook-scraper-api",
+  "version": "0.1.0",
+  "description": "Facebook scraper API for Node.js: public Pages, posts, groups, reels, comments and search, with no login, cookies or Puppeteer.",
+  "keywords": [
+    "facebook-scraper",
+    "facebook-scraper-api",
+    "facebook-api",
+    "facebook-posts",
+    "facebook-pages",
+    "facebook-groups",
+    "facebook-comments",
+    "puppeteer-alternative",
+    "scraping",
+    "socialapis"
+  ],
+  "homepage": "https://github.com/SocialAPIsHub/facebook-scraper-js#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SocialAPIsHub/facebook-scraper-js.git"
+  },
+  "bugs": "https://github.com/SocialAPIsHub/facebook-scraper-js/issues",
+  "license": "MIT",
+  "author": "SocialAPIs <support@socialapis.io> (https://socialapis.io)",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    }
+  },
+  "types": "./src/index.d.ts",
+  "bin": {
+    "facebook-scraper-api": "bin/facebook-scraper-api.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.3"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "socialapis-sdk": "^0.1.3"
+  }
+}

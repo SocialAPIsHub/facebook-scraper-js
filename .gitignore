@@ -10,3 +10,4 @@ dist/
 .env.*
 *.token
 .socialapis_token
+package-lock.json
