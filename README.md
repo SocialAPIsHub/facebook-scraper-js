@@ -112,7 +112,7 @@ Full working example: [`examples/migrate.ts`](examples/migrate.ts).
 
 ## What you get on top of common scrapers
 
-The hosted API exposes 35 Facebook endpoints + 13 Instagram + 3 Account, all from the same SDK. From the `FacebookScraper` (or `Facebook`) instance:
+The hosted API exposes 37 Facebook endpoints + 13 Instagram + 3 Account, all from the same SDK. From the `FacebookScraper` (or `Facebook`) instance:
 
 ```ts
 // Search — pages, people, posts, videos, locations
@@ -150,7 +150,7 @@ Full method list + TypeScript response types: [main SDK README →](https://gith
 | **Bundle size impact** | Server-only — can't ship to browsers | Works in Node 18+, browsers, Bun, Deno |
 | **Memory footprint** | ~300MB+ per Puppeteer instance | ~5MB |
 | **Detection risk** | High — fingerprinted, captcha walls | None — we handle it |
-| **Surface area** | Whatever you can scrape (fragile) | 35 Facebook endpoints + 13 IG + Account |
+| **Surface area** | Whatever you can scrape (fragile) | 37 Facebook endpoints + 13 IG + Account |
 
 ## Pricing
 
@@ -182,7 +182,7 @@ Options: `?theme=dark`, `?style=flat`, `?label=Your%20text`. Get the HTML, Markd
 - **Python SDK** (PyPI `socialapis-sdk`): [SocialAPIsHub/socialapis-python](https://github.com/SocialAPIsHub/socialapis-python)
 - **Go SDK**: [SocialAPIsHub/socialapis-go](https://github.com/SocialAPIsHub/socialapis-go)
 - **Hosted API docs**: [docs.socialapis.io](https://docs.socialapis.io)
-- **Endpoint catalog (50+ endpoints)**: [socialapis.io/api-sources](https://socialapis.io/api-sources)
+- **Endpoint catalog (53 endpoints)**: [socialapis.io/api-sources](https://socialapis.io/api-sources)
 - **Status page**: [socialapis.io/status](https://socialapis.io/status)
 - **Telegram (fastest support)**: [t.me/socialapis](https://t.me/socialapis)
 - **Email**: [support@socialapis.io](mailto:support@socialapis.io)
