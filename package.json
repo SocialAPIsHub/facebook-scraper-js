@@ -44,7 +44,7 @@
   },
   "sideEffects": false,
   "scripts": {
-    "test": "node --test test/"
+    "test": "node --test test/*.test.js"
   },
   "dependencies": {
     "socialapis-sdk": "^0.1.3"
